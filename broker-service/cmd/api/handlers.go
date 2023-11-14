@@ -165,6 +165,9 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	var payload jsonResponse
 	payload.Error = false
 	payload.Message = "Authenticated!"
+
+	// payload.Error = jsonFromService.Error
+	// payload.Message = jsonFromService.Message
 	payload.Data = jsonFromService.Data
 
 	app.writeJSON(w, http.StatusAccepted, payload)
