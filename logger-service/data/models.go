@@ -26,21 +26,27 @@ type Models struct {
 }
 
 type LogEntry struct {
-	ID        string    `bson:"_id, omitempty" json:"id,omitempty"`
+	ID        string    `bson:"_id,omitempty" json:"id,omitempty"`
 	Name      string    `bson:"name" json:"name"`
 	Data      string    `bson:"data" json:"data"`
-	CreateAt  time.Time `bson:"create_at" json:"create_at"`
+	CreatedAt time.Time `bson:"created_at" json:"created_at"`
 	UpdatedAt time.Time `bson:"updated_at" json:"updated_at"`
 }
 
 func (l *LogEntry) Insert(entry LogEntry) error {
 	collection := client.Database("logs").Collection("logs")
+
 	_, err := collection.InsertOne(context.TODO(), LogEntry{
 		Name:      entry.Name,
 		Data:      entry.Data,
-		CreateAt:  time.Now(),
+		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	})
+
+	log.Println("collection", collection)
+
+	log.Println("ERROR[mongo]", err)
+
 	if err != nil {
 		log.Println("Error inserting into Logs:", err)
 		return err
@@ -132,7 +138,7 @@ func (l *LogEntry) Update() (*mongo.UpdateResult, error) {
 			{"$set", bson.D{
 				{"name", l.Name},
 				{"data", l.Data},
-				{"upated_at", time.Now()},
+				{"updated_at", time.Now()},
 			}},
 		},
 	)

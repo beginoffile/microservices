@@ -60,7 +60,9 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *Config) logItem(w http.ResponseWriter, entry LogPayLoad) {
+
 	jsonData, _ := json.MarshalIndent(entry, "", "\t")
+
 	logServiceURL := "http://logger-service/log"
 	request, err := http.NewRequest("POST", logServiceURL, bytes.NewBuffer(jsonData))
 	if err != nil {
@@ -85,9 +87,32 @@ func (app *Config) logItem(w http.ResponseWriter, entry LogPayLoad) {
 		return
 	}
 
+	// var payload jsonResponse
+	// payload.Error = false
+	// payload.Message = "logged"
+
+	// app.writeJSON(w, http.StatusAccepted, payload)
+
+	// create a variable we'll read response.Body into
+	var jsonFromService jsonResponse
+
+	//decode the json from the auth service
+	err = json.NewDecoder(response.Body).Decode(&jsonFromService)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	if jsonFromService.Error {
+		app.errorJSON(w, err, http.StatusSeeOther)
+		return
+	}
+
 	var payload jsonResponse
-	payload.Error = false
-	payload.Message = "logged"
+	// payload.Error = false
+	// payload.Message = "logged"
+	payload.Error = jsonFromService.Error
+	payload.Message = jsonFromService.Message
 
 	app.writeJSON(w, http.StatusAccepted, payload)
 

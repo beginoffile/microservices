@@ -47,7 +47,7 @@
         logBtn.addEventListener("click", async ()=>{
             const payload = {
                 action: "log",
-                auth:{
+                log:{
                     name: "event",
                     data: "Some kind of data",
                 }
@@ -57,7 +57,7 @@
             headers.append("Content-Type", "application/json");
 
             const body = {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify(payload),
                 headers: headers,
             }
@@ -71,7 +71,7 @@
                     console.log(data.message);
                     output.innerHTML += `<br><strong>Error:</strong> ${data.message}`;
 
-                }else{
+                }else{                    
                     output.innerHTML += `<br><strong>Response from Logger Service<strong>: ${data.message}`;
                 }
             }

@@ -25,7 +25,8 @@ func (app *Config) readJSON(w http.ResponseWriter, r *http.Request, data any) er
 
 	err = dec.Decode(&struct{}{})
 	if err != io.EOF {
-		return errors.New("Body must have only a single JSON value[Broker-service]")
+		// return errors.New("Body must have only a single JSON value[Broker-service]")
+		return errors.New("body must have only a single JSON value[Broker-service]")
 	}
 
 	return nil
