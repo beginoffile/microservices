@@ -10,6 +10,7 @@
                 <a id="brokerBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Broker</a>
                 <a id="authBrokerBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Auth</a>
                 <a id="logBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Log</a>
+                <a id="mailBtn" class="btn btn-outline-secondary" href="javascript:void(0);">Test Mail</a>
 
                 
 
@@ -40,9 +41,50 @@
         let brokerBtn = document.getElementById("brokerBtn");
         let authBrokerBtn = document.getElementById("authBrokerBtn");
         let logBtn = document.getElementById("logBtn");
+        let mailBtn = document.getElementById("mailBtn");
         let output = document.getElementById("output");
         let sent = document.getElementById("payload");
         let received = document.getElementById("received");
+        
+
+        mailBtn.addEventListener("click", async ()=>{
+            const payload = {
+                action: "mail",
+                mail:{
+                    from: "me@example.com",
+                    to: "you@there.com",
+                    subject: "Test email",
+                    message: "Hello world!",
+                }
+            }
+
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+
+            const body = {
+                method: 'POST',
+                body: JSON.stringify(payload),
+                headers: headers,
+            }
+
+            try{
+                response = await fetch("http:\/\/localhost:8080/handle", body);
+                let data = await response.json();
+                sent.innerHTML = JSON.stringify(payload, undefined, 4);
+                received.innerHTML = JSON.stringify(data, undefined, 4);
+                if (data.error){
+                    console.log(data.message);
+                    output.innerHTML += `<br><strong>Error:</strong> ${data.message}`;
+
+                }else{
+                    output.innerHTML += `<br><strong>Response from Broker Service<strong>: ${data.message}`;
+                }
+            }
+            catch(error){
+                output.innerHTML += "<br><br>Error: " + error;
+            }
+        });
+        
 
         logBtn.addEventListener("click", async ()=>{
             const payload = {
