@@ -275,6 +275,7 @@ func (app *Config) logItemViaRPC(w http.ResponseWriter, l LogPayLoad) {
 		app.errorJSON(w, err)
 		return
 	}
+
 	rpcPayload := RPCPayload{
 		Name: l.Name,
 		Data: l.Data,
@@ -286,6 +287,7 @@ func (app *Config) logItemViaRPC(w http.ResponseWriter, l LogPayLoad) {
 		app.errorJSON(w, err)
 		return
 	}
+
 	payload := jsonResponse{
 		Error:   false,
 		Message: result,
