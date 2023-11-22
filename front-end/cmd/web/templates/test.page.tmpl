@@ -70,7 +70,7 @@
             }
 
             try{
-                response = await fetch("http:\/\/localhost:8080/handle", body);
+                response = await fetch({{print .BrokerURL "/handle"}}, body);
                 let data = await response.json();
                 sent.innerHTML = JSON.stringify(payload, undefined, 4);
                 received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -107,7 +107,7 @@
             }
 
             try{
-                response = await fetch("http:\/\/localhost:8080/log-grpc", body);
+                response = await fetch({{print .BrokerURL "/log-grpc"}}, body);
                 let data = await response.json();
                 sent.innerHTML = JSON.stringify(payload, undefined, 4);
                 received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -145,7 +145,7 @@
             }
 
             try{
-                response = await fetch("http:\/\/localhost:8080/handle", body);
+                response = await fetch({{print .BrokerURL "/handle"}}, body);
                 let data = await response.json();
                 sent.innerHTML = JSON.stringify(payload, undefined, 4);
                 received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -183,7 +183,7 @@
             }
 
             try{
-                response = await fetch("http:\/\/localhost:8080/handle", body);
+                response = await fetch({{print .BrokerURL "/handle"}}, body);
                 let data = await response.json();
                 sent.innerHTML = JSON.stringify(payload, undefined, 4);
                 received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -205,7 +205,7 @@
                 method: 'POST',
             }
             try{
-                response = await fetch("http:\/\/localhost:8080", body);
+                response = await fetch({{.BrokerURL}}, body);
                 let data = await response.json();
                 sent.innerHTML = "Empty Post Request";
                 received.innerHTML = JSON.stringify(data, undefined, 4);
