@@ -204,6 +204,7 @@
             const body = {
                 method: 'POST',
             }
+            
             try{
                 response = await fetch({{.BrokerURL}}, body);
                 let data = await response.json();
